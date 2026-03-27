@@ -75,10 +75,6 @@
       min-width: 180px;
     }
 
-    #noBtn:hover {
-      background: #607d8b;
-    }
-
     #success {
       display: none;
       margin-top: 2em;
@@ -96,8 +92,7 @@
       margin: 0.8em 0 1.5em;
     }
 
-    #gif {
-      display: none;
+    #jpg {
       max-width: 320px;
       border-radius: 16px;
       box-shadow: 0 12px 32px rgba(233,30,99,0.35);
@@ -127,6 +122,15 @@
       0%   { transform: translateY(110vh) translateX(0); }
       100% { transform: translateY(-20vh) translateX(40vw); }
     }
+
+    /* Wiggle animation for No button */
+    @keyframes wiggle {
+      0% { transform: rotate(-3deg); }
+      25% { transform: rotate(3deg); }
+      50% { transform: rotate(-3deg); }
+      75% { transform: rotate(3deg); }
+      100% { transform: rotate(0); }
+    }
   </style>
 </head>
 <body>
@@ -150,16 +154,15 @@
   </div>
 
   <script>
-    const yesBtn   = document.getElementById('yesBtn');
-    const noBtn    = document.getElementById('noBtn');
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
     const buttonsDiv = document.getElementById('buttonsDiv');
-    const success  = document.getElementById('success');
-    const gif      = document.getElementById('gif');
-    const heartBg  = document.getElementById('heartBg');
+    const success = document.getElementById('success');
+    const heartBg = document.getElementById('heartBg');
 
     let yesScale = 1;
 
-    // Floating hearts
+    // Floating hearts background
     function spawnHeart() {
       const heart = document.createElement('div');
       heart.className = 'heart';
@@ -168,62 +171,59 @@
       heart.style.animationDuration = (Math.random() * 4 + 6) + 's';
       heart.style.fontSize = (Math.random() * 1.4 + 1.2) + 'rem';
       heartBg.appendChild(heart);
-      setTimeout(() => heart.remove(), 8000);
+      setTimeout(() => heart.remove(), 9000);
     }
 
-    setInterval(spawnHeart, 700);
+    setInterval(spawnHeart, 600);
 
-    // YES clicked → show love explosion
+    // YES button → celebration
     yesBtn.addEventListener('click', () => {
       buttonsDiv.style.display = 'none';
       success.style.display = 'block';
-      gif.style.display = 'block';
 
-      // Extra hearts burst
-      for (let i = 0; i < 25; i++) {
-        setTimeout(spawnHeart, i * 100);
+      // Big heart burst
+      for (let i = 0; i < 30; i++) {
+        setTimeout(spawnHeart, i * 80);
       }
     });
 
-    // NO clicked → yes grows, no runs away
+    // NO button → runs away + YES grows
     noBtn.addEventListener('click', () => {
-      // Grow YES
-      yesScale += 0.45;
+      // Make YES bigger and cuter
+      yesScale += 0.5;
       yesBtn.style.transform = `scale(${yesScale})`;
-      yesBtn.style.padding = `${20 + yesScale*15}px ${60 + yesScale*30}px`;
+      yesBtn.style.padding = `${20 + yesScale * 12}px ${60 + yesScale * 25}px`;
 
-      // Make NO run away
-      const maxX = window.innerWidth - noBtn.offsetWidth - 60;
-      const maxY = window.innerHeight - noBtn.offsetHeight - 60;
+      // Make NO run away to a random position
+      const maxX = window.innerWidth - noBtn.offsetWidth - 80;
+      const maxY = window.innerHeight - noBtn.offsetHeight - 100;
 
       let newX = Math.random() * maxX;
       let newY = Math.random() * maxY;
 
-      // Keep it somewhat visible at first, then more chaotic
       noBtn.style.position = 'fixed';
-      noBtn.style.left = newX + 'px';
-      noBtn.style.top  = newY + 'px';
-      noBtn.style.zIndex = 20;
+      noBtn.style.left = `${newX}px`;
+      noBtn.style.top = `${newY}px`;
+      noBtn.style.zIndex = 30;
 
-      // Tiny shake
+      // Wiggle effect
       noBtn.style.animation = 'none';
-      void noBtn.offsetWidth; // trigger reflow
-      noBtn.style.animation = 'wiggle 0.3s';
+      void noBtn.offsetWidth;
+      noBtn.style.animation = 'wiggle 0.4s';
     });
 
-    // Optional tiny wiggle animation for NO button
-    const style = document.createElement('style');
-    style.textContent = `
-      @keyframes wiggle {
-        0% { transform: rotate(-3deg); }
-        25% { transform: rotate(3deg); }
-        50% { transform: rotate(-3deg); }
-        75% { transform: rotate(3deg); }
-        100% { transform: rotate(0); }
-      }
-    `;
-    document.head.appendChild(style);
-  </script>
+    // Extra: Make "No" also run away when hovered (more fun!)
+    noBtn.addEventListener('mouseenter', () => {
+      const maxX = window.innerWidth - noBtn.offsetWidth - 80;
+      const maxY = window.innerHeight - noBtn.offsetHeight - 100;
 
+      let newX = Math.random() * maxX;
+      let newY = Math.random() * maxY;
+
+      noBtn.style.position = 'fixed';
+      noBtn.style.left = `${newX}px`;
+      noBtn.style.top = `${newY}px`;
+    });
+  </script>
 </body>
 </html>
