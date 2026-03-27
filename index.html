@@ -77,7 +77,7 @@
 
     #success {
       display: none;
-      margin-top: 2em;
+      margin-top: 1em;
     }
 
     #success h1 {
@@ -93,7 +93,7 @@
     }
 
     #jpg {
-      max-width: 100px;
+      max-width: 120px;
       border-radius: 16px;
       box-shadow: 0 12px 32px rgba(233,30,99,0.35);
       margin-top: 1.5em;
@@ -123,7 +123,6 @@
       100% { transform: translateY(-20vh) translateX(40vw); }
     }
 
-    /* Wiggle animation for No button */
     @keyframes wiggle {
       0% { transform: rotate(-3deg); }
       25% { transform: rotate(3deg); }
@@ -138,14 +137,18 @@
   <div class="heart-bg" id="heartBg"></div>
 
   <div class="container">
-    <h1>HALLLOOO DARLINGGG ♡</h1>
-    <h2>LOVE KITA SO MUCHH.. Love mo ba ako???? 🥰💖</h2>
+    <!-- Main Question Section -->
+    <div id="questionSection">
+      <h1>HALLLOOO DARLINGGG ♡</h1>
+      <h2>LOVE KITA SO MUCHH.. Love mo ba ako???? 🥰💖</h2>
 
-    <div class="buttons" id="buttonsDiv">
-      <button id="yesBtn">YES 💘</button>
-      <button id="noBtn">No 😢</button>
+      <div class="buttons" id="buttonsDiv">
+        <button id="yesBtn">YES 💘</button>
+        <button id="noBtn">No 😢</button>
+      </div>
     </div>
 
+    <!-- Success Section (hidden initially) -->
     <div id="success">
       <h1>YIPPIEEE!! 🎉💕</h1>
       <p>I love you so so so much!!! 🥹🌸✨</p>
@@ -156,7 +159,7 @@
   <script>
     const yesBtn = document.getElementById('yesBtn');
     const noBtn = document.getElementById('noBtn');
-    const buttonsDiv = document.getElementById('buttonsDiv');
+    const questionSection = document.getElementById('questionSection');
     const success = document.getElementById('success');
     const heartBg = document.getElementById('heartBg');
 
@@ -178,7 +181,10 @@
 
     // YES button → celebration
     yesBtn.addEventListener('click', () => {
-      buttonsDiv.style.display = 'none';
+      // Hide the entire question + buttons
+      questionSection.style.display = 'none';
+      
+      // Show success message
       success.style.display = 'block';
 
       // Big heart burst
@@ -189,12 +195,11 @@
 
     // NO button → runs away + YES grows
     noBtn.addEventListener('click', () => {
-      // Make YES bigger and cuter
       yesScale += 0.5;
       yesBtn.style.transform = `scale(${yesScale})`;
       yesBtn.style.padding = `${20 + yesScale * 12}px ${60 + yesScale * 25}px`;
 
-      // Make NO run away to a random position
+      // Make NO run away
       const maxX = window.innerWidth - noBtn.offsetWidth - 80;
       const maxY = window.innerHeight - noBtn.offsetHeight - 100;
 
@@ -212,7 +217,7 @@
       noBtn.style.animation = 'wiggle 0.4s';
     });
 
-    // Extra: Make "No" also run away when hovered (more fun!)
+    // Extra: Make "No" run away when hovered
     noBtn.addEventListener('mouseenter', () => {
       const maxX = window.innerWidth - noBtn.offsetWidth - 80;
       const maxY = window.innerHeight - noBtn.offsetHeight - 100;
