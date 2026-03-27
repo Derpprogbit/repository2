@@ -21,20 +21,21 @@
 
     .container {
       max-width: 90%;
-      padding: 30px;
+      padding: 40px 20px;
       z-index: 10;
     }
 
-    h1 {
-      font-size: 3.4rem;
-      margin: 0.4em 0;
+    /* Question Section */
+    #questionSection h1 {
+      font-size: 3.8rem;
+      margin: 0.3em 0;
       color: #d81b60;
       text-shadow: 2px 2px #fff, 4px 4px #ffccdd;
     }
 
-    h2 {
-      font-size: 2.1rem;
-      margin: 1.2em 0 2em;
+    #questionSection h2 {
+      font-size: 2.2rem;
+      margin: 1.2em 0 2.5em;
       color: #e91e63;
     }
 
@@ -44,64 +45,64 @@
       justify-content: center;
       flex-wrap: wrap;
       margin: 2em 0;
-      position: relative;
     }
 
     button {
-      font-size: 2rem;
+      font-size: 2.1rem;
       font-weight: bold;
-      padding: 20px 60px;
+      padding: 22px 65px;
       border: none;
       border-radius: 999px;
       cursor: pointer;
       transition: all 0.3s ease;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
     }
 
     #yesBtn {
       background: #ff4081;
       color: white;
-      min-width: 220px;
+      min-width: 240px;
     }
 
     #yesBtn:hover {
       background: #f50057;
-      transform: scale(1.08);
+      transform: scale(1.1);
     }
 
     #noBtn {
       background: #78909c;
       color: white;
-      min-width: 180px;
+      min-width: 190px;
     }
 
+    /* Success Section */
     #success {
       display: none;
-      margin-top: 1em;
     }
 
     #success h1 {
-      font-size: 4.5rem;
+      font-size: 4.8rem;
       color: #e91e63;
-      margin: 0.3em 0;
-      animation: pulse 1.5s infinite;
+      margin: 0.4em 0 0.2em;
+      animation: pulse 1.6s infinite;
     }
 
     #success p {
-      font-size: 2.3rem;
-      margin: 0.8em 0 1.5em;
+      font-size: 2.4rem;
+      margin: 1em 0 1.5em;
+      color: #c2185b;
     }
 
     #jpg {
-      max-width: 120px;
-      border-radius: 16px;
-      box-shadow: 0 12px 32px rgba(233,30,99,0.35);
-      margin-top: 1.5em;
+      max-width: 140px;
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(233, 30, 99, 0.4);
+      margin-top: 20px;
     }
 
     @keyframes pulse {
       0%, 100% { transform: scale(1); }
-      50%      { transform: scale(1.08); }
+      50% { transform: scale(1.07); }
     }
 
     .heart-bg {
@@ -113,22 +114,19 @@
 
     .heart {
       position: absolute;
-      font-size: 1.8rem;
-      animation: floatUp 7s linear infinite;
-      opacity: 0.6;
+      font-size: 2rem;
+      animation: floatUp 8s linear infinite;
+      opacity: 0.65;
     }
 
     @keyframes floatUp {
-      0%   { transform: translateY(110vh) translateX(0); }
-      100% { transform: translateY(-20vh) translateX(40vw); }
+      0% { transform: translateY(110vh) translateX(0); }
+      100% { transform: translateY(-30vh) translateX(50vw); }
     }
 
     @keyframes wiggle {
-      0% { transform: rotate(-3deg); }
-      25% { transform: rotate(3deg); }
-      50% { transform: rotate(-3deg); }
-      75% { transform: rotate(3deg); }
-      100% { transform: rotate(0); }
+      0%, 100% { transform: rotate(-4deg); }
+      50% { transform: rotate(4deg); }
     }
   </style>
 </head>
@@ -137,23 +135,25 @@
   <div class="heart-bg" id="heartBg"></div>
 
   <div class="container">
-    <!-- Main Question Section -->
+    
+    <!-- QUESTION SECTION (this will be hidden when Yes is clicked) -->
     <div id="questionSection">
       <h1>HALLLOOO DARLINGGG ♡</h1>
       <h2>LOVE KITA SO MUCHH.. Love mo ba ako???? 🥰💖</h2>
 
-      <div class="buttons" id="buttonsDiv">
+      <div class="buttons">
         <button id="yesBtn">YES 💘</button>
         <button id="noBtn">No 😢</button>
       </div>
     </div>
 
-    <!-- Success Section (hidden initially) -->
+    <!-- SUCCESS SECTION -->
     <div id="success">
       <h1>YIPPIEEE!! 🎉💕</h1>
       <p>I love you so so so much!!! 🥹🌸✨</p>
       <img id="jpg" src="jade.JPG" alt="My Girl">
     </div>
+
   </div>
 
   <script>
@@ -165,69 +165,55 @@
 
     let yesScale = 1;
 
-    // Floating hearts background
+    // Floating hearts
     function spawnHeart() {
       const heart = document.createElement('div');
       heart.className = 'heart';
       heart.textContent = ['💗','💖','❤️','💓','💞'][Math.floor(Math.random()*5)];
       heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.animationDuration = (Math.random() * 4 + 6) + 's';
-      heart.style.fontSize = (Math.random() * 1.4 + 1.2) + 'rem';
+      heart.style.animationDuration = (Math.random() * 5 + 6) + 's';
+      heart.style.fontSize = (Math.random() * 1.6 + 1.4) + 'rem';
       heartBg.appendChild(heart);
-      setTimeout(() => heart.remove(), 9000);
+      
+      setTimeout(() => heart.remove(), 10000);
     }
 
-    setInterval(spawnHeart, 600);
+    setInterval(spawnHeart, 550);
 
-    // YES button → celebration
+    // === CLICK YES ===
     yesBtn.addEventListener('click', () => {
-      // Hide the entire question + buttons
-      questionSection.style.display = 'none';
+      // This is the important line:
+      questionSection.style.display = 'none';   // Completely removes question + buttons
       
-      // Show success message
-      success.style.display = 'block';
+      success.style.display = 'block';          // Shows the success message
 
-      // Big heart burst
-      for (let i = 0; i < 30; i++) {
-        setTimeout(spawnHeart, i * 80);
+      // Heart explosion
+      for (let i = 0; i < 35; i++) {
+        setTimeout(spawnHeart, i * 70);
       }
     });
 
-    // NO button → runs away + YES grows
+    // NO button behavior (runs away)
     noBtn.addEventListener('click', () => {
-      yesScale += 0.5;
+      yesScale += 0.55;
       yesBtn.style.transform = `scale(${yesScale})`;
-      yesBtn.style.padding = `${20 + yesScale * 12}px ${60 + yesScale * 25}px`;
+      yesBtn.style.padding = `${22 + yesScale * 15}px ${65 + yesScale * 30}px`;
 
-      // Make NO run away
-      const maxX = window.innerWidth - noBtn.offsetWidth - 80;
-      const maxY = window.innerHeight - noBtn.offsetHeight - 100;
-
-      let newX = Math.random() * maxX;
-      let newY = Math.random() * maxY;
+      const maxX = window.innerWidth - noBtn.offsetWidth - 100;
+      const maxY = window.innerHeight - noBtn.offsetHeight - 120;
 
       noBtn.style.position = 'fixed';
-      noBtn.style.left = `${newX}px`;
-      noBtn.style.top = `${newY}px`;
-      noBtn.style.zIndex = 30;
-
-      // Wiggle effect
-      noBtn.style.animation = 'none';
-      void noBtn.offsetWidth;
-      noBtn.style.animation = 'wiggle 0.4s';
+      noBtn.style.left = `${Math.random() * maxX}px`;
+      noBtn.style.top = `${Math.random() * maxY}px`;
+      noBtn.style.animation = 'wiggle 0.45s';
     });
 
-    // Extra: Make "No" run away when hovered
     noBtn.addEventListener('mouseenter', () => {
-      const maxX = window.innerWidth - noBtn.offsetWidth - 80;
-      const maxY = window.innerHeight - noBtn.offsetHeight - 100;
-
-      let newX = Math.random() * maxX;
-      let newY = Math.random() * maxY;
-
+      const maxX = window.innerWidth - noBtn.offsetWidth - 100;
+      const maxY = window.innerHeight - noBtn.offsetHeight - 120;
       noBtn.style.position = 'fixed';
-      noBtn.style.left = `${newX}px`;
-      noBtn.style.top = `${newY}px`;
+      noBtn.style.left = `${Math.random() * maxX}px`;
+      noBtn.style.top = `${Math.random() * maxY}px`;
     });
   </script>
 </body>
